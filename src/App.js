@@ -1,20 +1,30 @@
-import "./App.css";
-import Home from "./Components/Home";
-import About from "./Components/About";
-import Work from "./Components/Work";
-import Testimonial from "./Components/Testimonial";
-import Contact from "./Components/Contact";
-import Footer from "./Components/Footer";
-import { BrowserRouter } from 'react-router-dom';
-import Navigator from "./Router/Navigator";
-function App() {
+import React from 'react'
+import Layout from './routes/Layout'
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
+import AuthContext from './Validate/AuthContext'
+
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+const clientQuery = new QueryClient();
+const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navigator />
-      </BrowserRouter>
-    </div>
-  );
+    <QueryClientProvider client={clientQuery}>
+      <ToastContainer
+        autoClose={3000}
+        style={{ width: 250 }}
+        position="bottom-left"
+        hideProgressBar={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
+      {/* auth config  */}
+      <AuthContext>
+        {/* page layout  */}
+        <Layout />
+      </AuthContext>
+    </QueryClientProvider>
+  )
 }
 
-export default App;
+export default App
